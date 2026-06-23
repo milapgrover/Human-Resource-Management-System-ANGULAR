@@ -1,0 +1,28 @@
+package com.example.hrms.service;
+import com.example.hrms.dto.LoginRequest;
+import com.example.hrms.dto.LoginResponse;
+import com.example.hrms.entity.Employee;
+import com.example.hrms.repository.EmployeeRepository;
+import com.example.hrms.security.JwtUtil;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class AuthService {
+    private final EmployeeRepository employeeRepository;
+    private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
+    public LoginResponse login(LoginRequest request)
+    {
+        Employee employee = employeeRepository.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException("Employee does not Exists"));
+        if (!passwordEncoder.matches(
+                request.getPassword(),
+                employee.getPassword())) {
+            throw new RuntimeException("Password is wrong");
+        }
+        String token = jwtUtil.generateToken(employee.getEmail());
+        return new LoginResponse(token);
+    }
+}

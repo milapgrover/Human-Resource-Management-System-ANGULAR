@@ -1,0 +1,17 @@
+.login-bg {
+  background: linear-gradient(to right, #1d4ed8, #3b82f6);
+}
+
+.login-card {
+  width: 450px;
+  border-radius: 25px;
+}
+
+.logo-box {
+  width: 90px;
+  height: 90px;
+}
+
+.logo-icon {
+  font-size: 45px;
+}

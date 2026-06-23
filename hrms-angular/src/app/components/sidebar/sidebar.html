@@ -1,0 +1,60 @@
+<div class="position-fixed top-0 start-0 vh-100 bg-primary shadow-lg d-flex flex-column"
+     style="width: 260px;">
+
+  <!-- Profile -->
+  <div class="p-4 border-bottom border-primary-subtle text-center">
+
+    <div
+      class="mx-auto rounded-circle bg-white d-flex justify-content-center align-items-center shadow"
+      style="width: 100px; height: 100px;">
+
+      <span class="fs-1 fw-bold text-primary">
+        {{ user?.firstName?.charAt(0)?.toUpperCase() || 'U' }}
+      </span>
+
+    </div>
+
+    <h5 class="text-white fw-bold mt-3">
+      {{
+        user?.firstName && user?.lastName
+          ? user.firstName + ' ' + user.lastName
+          : 'User'
+      }}
+    </h5>
+
+  </div>
+
+  <!-- Menu -->
+  <div class="flex-grow-1 p-3">
+
+    @for(item of menuItems; track item.id){
+
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="active-link"
+        class="menu-link">
+
+        <i [class]="item.icon"></i>
+        <span>{{ item.name }}</span>
+
+      </a>
+
+    }
+
+  </div>
+
+  <!-- Logout -->
+  <div class="p-3 border-top border-primary-subtle">
+
+    <button
+      class="btn btn-danger w-100"
+      (click)="logout()">
+
+      <i class="bi bi-box-arrow-right me-2"></i>
+      Logout
+
+    </button>
+
+  </div>
+
+</div>

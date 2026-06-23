@@ -1,0 +1,246 @@
+<app-sidebar></app-sidebar>
+
+<div class="page-content">
+
+  <div class="container-fluid py-4">
+
+    <h1 class="text-primary fw-bold mb-4">
+      Employee Management
+    </h1>
+
+    <!-- Stats -->
+
+    <div class="row g-4 mb-4">
+
+      <div class="col-md-4">
+
+        <div class="card shadow border-0">
+          <div class="card-body">
+            <h6>Total Employees</h6>
+            <h2>{{ employees.length }}</h2>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+
+        <div class="card shadow border-0">
+          <div class="card-body">
+            <h6>Active Employees</h6>
+            <h2 class="text-success">
+              {{ activeEmployees() }}
+            </h2>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+
+        <div class="card shadow border-0">
+          <div class="card-body">
+            <h6>Departments</h6>
+            <h2 class="text-primary">
+              {{ departmentCount() }}
+            </h2>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Add Employee -->
+
+    <div class="card shadow border-0 mb-4">
+      <div class="card-body">
+
+        <h4 class="text-primary mb-4">
+          Add Employee
+        </h4>
+
+        <div class="row g-3">
+
+          <div class="col-md-4">
+            <input
+              class="form-control"
+              placeholder="Employee Code"
+              [(ngModel)]="form.employeeCode">
+          </div>
+
+          <div class="col-md-4">
+            <input
+              class="form-control"
+              placeholder="First Name"
+              [(ngModel)]="form.firstName">
+          </div>
+
+          <div class="col-md-4">
+            <input
+              class="form-control"
+              placeholder="Last Name"
+              [(ngModel)]="form.lastName">
+          </div>
+
+          <div class="col-md-4">
+            <input
+              class="form-control"
+              placeholder="Email"
+              [(ngModel)]="form.email">
+          </div>
+
+          <div class="col-md-4">
+            <input
+              class="form-control"
+              placeholder="Phone Number"
+              [(ngModel)]="form.phoneNumber">
+          </div>
+
+          <div class="col-md-4">
+            <input
+              class="form-control"
+              placeholder="Department"
+              [(ngModel)]="form.department">
+          </div>
+
+          <div class="col-md-4">
+            <input
+              class="form-control"
+              placeholder="Designation"
+              [(ngModel)]="form.designation">
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Salary"
+              [(ngModel)]="form.salary">
+          </div>
+
+          <div class="col-md-4">
+            <select
+              class="form-select"
+              [(ngModel)]="form.role">
+
+              <option value="">
+                Select Role
+              </option>
+
+              <option value="ADMIN">
+                ADMIN
+              </option>
+
+              <option value="EMPLOYEE">
+                EMPLOYEE
+              </option>
+
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              [(ngModel)]="form.password">
+          </div>
+
+        </div>
+
+        <button
+          class="btn btn-primary mt-4"
+          (click)="addEmployee()">
+
+          Add Employee
+
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Employee Table -->
+
+    <div class="card shadow border-0">
+
+      <div class="card-body">
+
+        <h4 class="text-primary mb-4">
+          Employee List
+        </h4>
+
+        <div class="table-responsive">
+
+          <table class="table table-hover">
+
+            <thead class="table-primary">
+
+              <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Salary</th>
+                <th>Role</th>
+                <th>Action</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              @for(emp of employees; track emp.id){
+
+                <tr>
+
+                  <td>{{ emp.id }}</td>
+
+                  <td>{{ emp.employeeCode }}</td>
+
+                  <td>
+                    {{ emp.firstName }}
+                    {{ emp.lastName }}
+                  </td>
+
+                  <td>{{ emp.email }}</td>
+
+                  <td>{{ emp.department }}</td>
+
+                  <td>{{ emp.designation }}</td>
+
+                  <td>₹{{ emp.salary }}</td>
+
+                  <td>{{ emp.role }}</td>
+
+                  <td>
+
+                    <button
+                      class="btn btn-danger btn-sm"
+                      (click)="deleteEmployee(emp.id)">
+
+                      Delete
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
