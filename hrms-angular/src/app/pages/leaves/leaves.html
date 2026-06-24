@@ -9,6 +9,8 @@
       Leave Management
     </h1>
 
+    <!-- Apply Leave -->
+
     <div class="card shadow border-0 mb-4">
       <div class="card-body">
 
@@ -28,7 +30,7 @@
                 Select Employee
               </option>
 
-              @for(emp of employees; track emp.id){
+              @for(emp of employees(); track emp.id){
 
                 <option [value]="emp.id">
                   {{ emp.firstName }}
@@ -82,7 +84,7 @@
       </div>
     </div>
 
-
+    <!-- Stats -->
 
     <div class="row g-4 mb-4">
 
@@ -91,7 +93,7 @@
         <div class="card shadow border-0">
           <div class="card-body">
             <h6>Total Requests</h6>
-            <h2>{{ leaves.length }}</h2>
+            <h2>{{ leaves().length }}</h2>
           </div>
         </div>
 
@@ -125,6 +127,7 @@
 
     </div>
 
+    <!-- Table -->
 
     <div class="card shadow border-0">
       <div class="card-body">
@@ -153,7 +156,7 @@
 
             <tbody>
 
-              @for(leave of leaves; track leave.id){
+              @for(leave of leaves(); track leave.id){
 
                 <tr>
 

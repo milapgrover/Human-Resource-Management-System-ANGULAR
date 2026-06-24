@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,60 +26,75 @@ export class Attendance implements OnInit {
 
   private api = inject(ApiService);
 
-  attendance: any[] = [];
-  employeeId = '';
+  attendance = signal<any[]>([]);
+
+  employeeId = signal('');
 
   ngOnInit(): void {
+
     this.fetchAttendance();
+
   }
 
-  fetchAttendance() {
-    this.api.getAttendance().subscribe({
-      next: (data) => this.attendance = data,
-      error: (err) => console.error(err)
-    });
+  fetchAttendance(): void {
+
+    this.api
+      .getAttendance()
+      .subscribe(data => {
+
+        this.attendance.set(data);
+
+      });
+
   }
 
-  checkIn() {
+  checkIn(): void {
 
-    if (!this.employeeId) {
+    if (!this.employeeId()) {
+
       alert('Enter Employee ID');
+
       return;
+
     }
 
-    this.api.checkIn({
-      employeeId: Number(this.employeeId)
-    }).subscribe({
-      next: () => {
+    this.api
+      .checkIn({
+        employeeId:
+          Number(this.employeeId())
+      })
+      .subscribe(() => {
 
-        alert('Check In Successful');
+        alert(
+          'Check In Successful'
+        );
 
-        this.employeeId = '';
-
-        this.fetchAttendance();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Check In Failed');
-      }
-    });
-  }
-
-  checkOut(attendanceId: number) {
-
-    this.api.checkOut({
-      attendanceId: attendanceId
-    }).subscribe({
-      next: () => {
-
-        alert('Check Out Successful');
+        this.employeeId.set('');
 
         this.fetchAttendance();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Check Out Failed');
-      }
-    });
+
+      });
+
   }
+
+  checkOut(
+    attendanceId: number
+  ): void {
+
+    this.api
+      .checkOut({
+        attendanceId
+      })
+      .subscribe(() => {
+
+        alert(
+          'Check Out Successful'
+        );
+
+        this.fetchAttendance();
+
+      });
+
+  }
+
 }

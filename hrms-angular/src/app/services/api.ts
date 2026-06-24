@@ -27,7 +27,6 @@ export class ApiService {
   }
 
 
-// Payroll 
 
   getPayroll() {
     return this.http.get<any[]>(
@@ -41,9 +40,6 @@ export class ApiService {
       data
     );
   }
-
-  // Leave 
-
   getLeaves() {
   return this.http.get<any[]>(
     `${this.baseUrl}/leaves`
@@ -70,9 +66,6 @@ rejectLeave(id: number) {
     {}
   );
 }
-
-// Employee 
-
 getEmployees() {
   return this.http.get<any[]>(
     `${this.baseUrl}/employees`
@@ -91,9 +84,6 @@ deleteEmployee(id: number) {
     `${this.baseUrl}/employees/${id}`
   );
 }
-
-
-// Attendance 
 
 
 getAttendance() {

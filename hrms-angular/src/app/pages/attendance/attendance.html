@@ -4,6 +4,8 @@
 
   <div class="container-fluid py-4">
 
+
+
     <div class="d-flex align-items-center gap-3 mb-4">
 
       <i class="bi bi-calendar-check-fill text-primary display-6"></i>
@@ -13,7 +15,6 @@
       </h1>
 
     </div>
-
 
     <div class="card shadow border-0 mb-4">
 
@@ -83,7 +84,7 @@
 
             <tbody>
 
-              @for(record of attendance; track record.id){
+              @for(record of attendance(); track record.id){
 
                 <tr>
 

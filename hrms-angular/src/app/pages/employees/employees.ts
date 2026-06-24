@@ -1,4 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  computed
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,7 +27,7 @@ export class Employees implements OnInit {
 
   private api = inject(ApiService);
 
-  employees: any[] = [];
+  employees = signal<any[]>([]);
 
   form = {
     employeeCode: '',
@@ -35,26 +42,54 @@ export class Employees implements OnInit {
     password: ''
   };
 
+  activeEmployees = computed(() =>
+
+    this.employees().filter(
+      employee => employee.active
+    ).length
+
+  );
+
+  departmentCount = computed(() =>
+
+    new Set(
+      this.employees().map(
+        employee => employee.department
+      )
+    ).size
+
+  );
+
   ngOnInit(): void {
+
     this.fetchEmployees();
+
   }
 
-  fetchEmployees() {
-    this.api.getEmployees().subscribe({
-      next: (data) => this.employees = data,
-      error: (err) => console.error(err)
-    });
+  fetchEmployees(): void {
+
+    this.api
+      .getEmployees()
+      .subscribe(data => {
+
+        this.employees.set(data);
+
+      });
+
   }
 
-  addEmployee() {
+  addEmployee(): void {
 
-    this.api.createEmployee({
-      ...this.form,
-      salary: Number(this.form.salary)
-    }).subscribe({
-      next: () => {
+    this.api
+      .createEmployee({
+        ...this.form,
+        salary: Number(this.form.salary)
+      })
+      .subscribe(() => {
 
-        alert('Employee Added Successfully');
+        alert(
+          'Employee Added Successfully'
+        );
 
         this.form = {
           employeeCode: '',
@@ -70,39 +105,25 @@ export class Employees implements OnInit {
         };
 
         this.fetchEmployees();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Failed To Add Employee');
-      }
-    });
+
+      });
+
   }
 
-  deleteEmployee(id: number) {
+  deleteEmployee(
+    id: number
+  ): void {
 
-    this.api.deleteEmployee(id).subscribe({
-      next: () => {
+    this.api
+      .deleteEmployee(id)
+      .subscribe(() => {
+
         alert('Employee Deleted');
+
         this.fetchEmployees();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Delete Failed');
-      }
-    });
+
+      });
+
   }
 
-  activeEmployees() {
-    return this.employees.filter(
-      e => e.active
-    ).length;
-  }
-
-  departmentCount() {
-    return new Set(
-      this.employees.map(
-        e => e.department
-      )
-    ).size;
-  }
 }

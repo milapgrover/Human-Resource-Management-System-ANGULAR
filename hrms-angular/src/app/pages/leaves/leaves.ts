@@ -1,9 +1,15 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  computed
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { Sidebar } from '../../components/sidebar/sidebar';
 import { Navbar } from '../../components/navbar/navbar';
+
 import { ApiService } from '../../services/api';
 
 @Component({
@@ -14,7 +20,7 @@ import { ApiService } from '../../services/api';
     FormsModule,
     Sidebar,
     Navbar
-  ],
+],
   templateUrl: './leaves.html',
   styleUrl: './leaves.css'
 })
@@ -22,8 +28,9 @@ export class Leaves implements OnInit {
 
   private api = inject(ApiService);
 
-  leaves: any[] = [];
-  employees: any[] = [];
+  leaves = signal<any[]>([]);
+
+  employees = signal<any[]>([]);
 
   form = {
     employeeId: '',
@@ -32,36 +39,76 @@ export class Leaves implements OnInit {
     reason: ''
   };
 
+  approvedCount = computed(() =>
+
+    this.leaves().filter(
+      leave =>
+        leave.status === 'APPROVED'
+    ).length
+
+  );
+
+  pendingCount = computed(() =>
+
+    this.leaves().filter(
+      leave =>
+        leave.status === 'PENDING'
+    ).length
+
+  );
+
   ngOnInit(): void {
+
     this.fetchLeaves();
+
     this.fetchEmployees();
+
   }
 
-  fetchLeaves() {
-    this.api.getLeaves().subscribe({
-      next: (data) => this.leaves = data,
-      error: (err) => console.error(err)
-    });
+  fetchLeaves(): void {
+
+    this.api
+      .getLeaves()
+      .subscribe(data => {
+
+        this.leaves.set(data);
+
+      });
+
   }
 
-  fetchEmployees() {
-    this.api.getEmployees().subscribe({
-      next: (data) => this.employees = data,
-      error: (err) => console.error(err)
-    });
+  fetchEmployees(): void {
+
+    this.api
+      .getEmployees()
+      .subscribe(data => {
+
+        this.employees.set(data);
+
+      });
+
   }
 
-  applyLeave() {
+  applyLeave(): void {
 
-    this.api.createLeave({
-      employeeId: Number(this.form.employeeId),
-      startDate: this.form.startDate,
-      endDate: this.form.endDate,
-      reason: this.form.reason
-    }).subscribe({
-      next: () => {
+    this.api
+      .createLeave({
+        employeeId:
+          Number(
+            this.form.employeeId
+          ),
+        startDate:
+          this.form.startDate,
+        endDate:
+          this.form.endDate,
+        reason:
+          this.form.reason
+      })
+      .subscribe(() => {
 
-        alert('Leave Applied Successfully');
+        alert(
+          'Leave Applied Successfully'
+        );
 
         this.form = {
           employeeId: '',
@@ -71,37 +118,37 @@ export class Leaves implements OnInit {
         };
 
         this.fetchLeaves();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Failed To Apply Leave');
-      }
-    });
+
+      });
+
   }
 
-  approveLeave(id: number) {
-    this.api.approveLeave(id).subscribe({
-      next: () => this.fetchLeaves(),
-      error: (err) => console.error(err)
-    });
+  approveLeave(
+    id: number
+  ): void {
+
+    this.api
+      .approveLeave(id)
+      .subscribe(() => {
+
+        this.fetchLeaves();
+
+      });
+
   }
 
-  rejectLeave(id: number) {
-    this.api.rejectLeave(id).subscribe({
-      next: () => this.fetchLeaves(),
-      error: (err) => console.error(err)
-    });
+  rejectLeave(
+    id: number
+  ): void {
+
+    this.api
+      .rejectLeave(id)
+      .subscribe(() => {
+
+        this.fetchLeaves();
+
+      });
+
   }
 
-  approvedCount() {
-    return this.leaves.filter(
-      l => l.status === 'APPROVED'
-    ).length;
-  }
-
-  pendingCount() {
-    return this.leaves.filter(
-      l => l.status === 'PENDING'
-    ).length;
-  }
 }

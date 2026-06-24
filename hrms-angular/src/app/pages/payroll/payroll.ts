@@ -1,4 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  computed
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,8 +19,7 @@ import { ApiService } from '../../services/api';
   imports: [
     CommonModule,
     FormsModule,
-    Sidebar,
-    Navbar
+    Sidebar
   ],
   templateUrl: './payroll.html',
   styleUrl: './payroll.css'
@@ -22,8 +28,9 @@ export class Payroll implements OnInit {
 
   private api = inject(ApiService);
 
-  payrolls: any[] = [];
-  employees: any[] = [];
+  payrolls = signal<any[]>([]);
+
+  employees = signal<any[]>([]);
 
   form = {
     employeeId: '',
@@ -32,36 +39,79 @@ export class Payroll implements OnInit {
     deduction: ''
   };
 
+  totalBonus = computed(() =>
+
+    this.payrolls().reduce(
+      (sum, payroll) =>
+        sum + (payroll.bonus || 0),
+      0
+    )
+
+  );
+
+  totalSalary = computed(() =>
+
+    this.payrolls().reduce(
+      (sum, payroll) =>
+        sum + (payroll.netSalary || 0),
+      0
+    )
+
+  );
+
   ngOnInit(): void {
+
     this.fetchPayrolls();
+
     this.fetchEmployees();
+
   }
 
-  fetchPayrolls() {
-    this.api.getPayroll().subscribe({
-      next: (data) => this.payrolls = data,
-      error: (err) => console.error(err)
-    });
+  fetchPayrolls(): void {
+
+    this.api
+      .getPayroll()
+      .subscribe(data => {
+
+        this.payrolls.set(data);
+
+      });
+
   }
 
-  fetchEmployees() {
-    this.api.getEmployees().subscribe({
-      next: (data) => this.employees = data,
-      error: (err) => console.error(err)
-    });
+  fetchEmployees(): void {
+
+    this.api
+      .getEmployees()
+      .subscribe(data => {
+
+        this.employees.set(data);
+
+      });
+
   }
 
-  generatePayroll() {
+  generatePayroll(): void {
 
-    this.api.createPayroll({
-      employeeId: Number(this.form.employeeId),
-      basicSalary: Number(this.form.basicSalary),
-      bonus: Number(this.form.bonus),
-      deduction: Number(this.form.deduction)
-    }).subscribe({
-      next: () => {
+    this.api
+      .createPayroll({
+        employeeId:
+          Number(this.form.employeeId),
 
-        alert('Payroll Generated Successfully');
+        basicSalary:
+          Number(this.form.basicSalary),
+
+        bonus:
+          Number(this.form.bonus),
+
+        deduction:
+          Number(this.form.deduction)
+      })
+      .subscribe(() => {
+
+        alert(
+          'Payroll Generated Successfully'
+        );
 
         this.form = {
           employeeId: '',
@@ -71,25 +121,9 @@ export class Payroll implements OnInit {
         };
 
         this.fetchPayrolls();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Failed To Generate Payroll');
-      }
-    });
+
+      });
+
   }
 
-  getTotalBonus(): number {
-    return this.payrolls.reduce(
-      (sum, p) => sum + (p.bonus || 0),
-      0
-    );
-  }
-
-  getTotalSalary(): number {
-    return this.payrolls.reduce(
-      (sum, p) => sum + (p.netSalary || 0),
-      0
-    );
-  }
 }

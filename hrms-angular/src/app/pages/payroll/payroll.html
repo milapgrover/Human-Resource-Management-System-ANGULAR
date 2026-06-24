@@ -31,7 +31,7 @@
                 Select Employee
               </option>
 
-              @for(emp of employees; track emp.id){
+              @for(emp of employees(); track emp.id){
 
                 <option [value]="emp.id">
                   {{ emp.firstName }}
@@ -79,7 +79,7 @@
       </div>
     </div>
 
-
+    <!-- Stats -->
 
     <div class="row g-4 mb-4">
 
@@ -87,7 +87,7 @@
         <div class="card shadow border-0">
           <div class="card-body">
             <h6>Total Payrolls</h6>
-            <h2>{{ payrolls.length }}</h2>
+            <h2>{{ payrolls().length }}</h2>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@
         <div class="card shadow border-0">
           <div class="card-body">
             <h6>Total Bonus</h6>
-            <h2>₹{{ getTotalBonus() }}</h2>
+            <h2>₹{{ totalBonus() }}</h2>
           </div>
         </div>
       </div>
@@ -105,14 +105,14 @@
         <div class="card shadow border-0">
           <div class="card-body">
             <h6>Total Salary Paid</h6>
-            <h2>₹{{ getTotalSalary() }}</h2>
+            <h2>₹{{ totalSalary() }}</h2>
           </div>
         </div>
       </div>
 
     </div>
 
-
+    <!-- Table -->
 
     <div class="card shadow border-0">
       <div class="card-body">
@@ -140,7 +140,7 @@
 
             <tbody>
 
-            @for(payroll of payrolls; track payroll.id){
+            @for(payroll of payrolls(); track payroll.id){
 
               <tr>
 

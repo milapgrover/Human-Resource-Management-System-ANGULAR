@@ -1,4 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  computed
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -18,60 +25,110 @@ import { ApiService } from '../../services/api';
 export class Dashboard implements OnInit {
 
   private api = inject(ApiService);
+
   private router = inject(Router);
 
-  employees: any[] = [];
-  attendance: any[] = [];
-  leaves: any[] = [];
-  payrolls: any[] = [];
+  employees = signal<any[]>([]);
 
-  loading = false;
-  error = '';
+  attendance = signal<any[]>([]);
+
+  leaves = signal<any[]>([]);
+
+  payrolls = signal<any[]>([]);
+
+  loading = signal(false);
+
+  error = signal('');
+
+  totalEmployees = computed(() =>
+
+    this.employees().length
+
+  );
+
+  totalAttendance = computed(() =>
+
+    this.attendance().length
+
+  );
+
+  totalLeaves = computed(() =>
+
+    this.leaves().length
+
+  );
+
+  totalPayrolls = computed(() =>
+
+    this.payrolls().length
+
+  );
 
   ngOnInit(): void {
 
-    const token = localStorage.getItem('token');
+    const token =
+      typeof localStorage !== 'undefined'
+        ? localStorage.getItem('token')
+        : null;
 
     if (!token) {
+
       this.router.navigate(['/']);
+
       return;
+
     }
 
     this.loadDashboard();
+
   }
 
-  loadDashboard() {
+  loadDashboard(): void {
 
-    this.loading = true;
+    this.loading.set(true);
 
-    this.api.getEmployees().subscribe({
-      next: (data) => this.employees = data,
-      error: (err) => console.error(err)
-    });
+    this.api
+      .getEmployees()
+      .subscribe(data => {
 
-    this.api.getAttendance().subscribe({
-      next: (data) => this.attendance = data,
-      error: (err) => console.error(err)
-    });
+        this.employees.set(data);
 
-    this.api.getLeaves().subscribe({
-      next: (data) => this.leaves = data,
-      error: (err) => console.error(err)
-    });
+      });
 
-    this.api.getPayroll().subscribe({
-      next: (data) => {
-        this.payrolls = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error(err);
-        this.loading = false;
-      }
-    });
+    this.api
+      .getAttendance()
+      .subscribe(data => {
+
+        this.attendance.set(data);
+
+      });
+
+    this.api
+      .getLeaves()
+      .subscribe(data => {
+
+        this.leaves.set(data);
+
+      });
+
+    this.api
+      .getPayroll()
+      .subscribe(data => {
+
+        this.payrolls.set(data);
+
+        this.loading.set(false);
+
+      });
+
   }
 
-  goTo(url: string) {
+  goTo(
+    url: string
+  ): void {
+
     this.router.navigate([url]);
+
   }
+
 }
