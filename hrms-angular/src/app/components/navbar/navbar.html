@@ -1,37 +1,21 @@
 <nav class="navbar">
+
   <div class="navbar-left">
-    <h4>HRMS</h4>
+    <h3 class="logo">HRMS</h3>
+
+    <a [routerLink]="['/dashboard']" routerLinkActive="active-nav">Dashboard</a>
+    <a [routerLink]="['/employees']" routerLinkActive="active-nav">Employees</a>
+    <a [routerLink]="['/attendance']" routerLinkActive="active-nav">Attendance</a>
+    <a [routerLink]="['/leaves']" routerLinkActive="active-nav">Leaves</a>
+    <a [routerLink]="['/payroll']" routerLinkActive="active-nav">Payroll</a>
   </div>
 
   <div class="navbar-right">
-    <button class="icon-btn">
-      🔔
+    <button class="logout-btn" (click)="logout()">
+      <i class="bi bi-box-arrow-right me-2"></i>
+      Logout
     </button>
-
-    <button class="icon-btn">
-      👤
-    </button>
-
-    <button class="icon-btn" (click)="logout()">
-      🚪
-    </button>
-  </div>
-</nav><nav class="navbar">
-  <div class="navbar-left">
-    <h4>HRMS</h4>
+    
   </div>
 
-  <div class="navbar-right">
-    <button class="icon-btn">
-      🔔
-    </button>
-
-    <button class="icon-btn">
-      👤
-    </button>
-
-    <button class="icon-btn" (click)="logout()">
-      🚪
-    </button>
-  </div>
 </nav>

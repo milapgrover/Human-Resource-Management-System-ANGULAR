@@ -1,151 +1,42 @@
-<app-sidebar></app-sidebar>
+<app-navbar></app-navbar>
 
 <div class="dashboard-content">
-
-  <div class="container-fluid py-4">
-
-
-
-    <div class="card border-0 shadow-lg bg-primary text-white mb-4">
-      <div class="card-body p-4">
-
-        <h1 class="fw-bold">
-          Human Resource Management System
-        </h1>
-
-        <p class="mb-0">
-          Manage Employees, Attendance,
-          Leaves and Payroll
+  <div class="container-fluid py-5">
+    <div class="row align-items-center mb-5">
+      <div class="col-lg-7">
+        <p class="text-uppercase text-secondary small mb-3" style="letter-spacing:4px;">
+          Human Resource Management
         </p>
 
+        <h1 class="display-2 fw-light">
+          Manage your <br>
+          workforce <br>
+          effortlessly.
+        </h1>
+
+        <p class="lead text-secondary mt-4 mb-5">
+          Human Resource Management System built to simplify employee
+          management, attendance tracking, leave requests and payroll.
+          Everything you need in one clean dashboard.
+        </p>
+
+        <button
+          class="btn btn-dark px-5 py-3 me-3"
+          (click)="goTo('/employees')">
+          Manage Employees
+        </button>
+
+        <button
+          class="btn btn-outline-dark px-5 py-3"
+          (click)="goTo('/attendance')">
+          Attendance
+        </button>
+
+      </div>
+      <div class="col-lg-5 d-flex justify-content-center">
+        <div style="width:350px;height:2px;background:#333;margin-top:150px;"></div>
       </div>
     </div>
-
-
-
-    <div class="row g-4">
-
-      <div class="col-md-3">
-        <div class="card shadow border-0">
-          <div class="card-body text-center">
-            <i class="bi bi-people-fill text-primary display-4"></i>
-            <h5 class="mt-3">Employees</h5>
-            <h2>{{ employees().length }}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="card shadow border-0">
-          <div class="card-body text-center">
-            <i class="bi bi-calendar-check-fill text-success display-4"></i>
-            <h5 class="mt-3">Attendance</h5>
-            <h2>{{ attendance().length }}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="card shadow border-0">
-          <div class="card-body text-center">
-            <i class="bi bi-airplane-fill text-warning display-4"></i>
-            <h5 class="mt-3">Leave Requests</h5>
-            <h2>{{ leaves().length }}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="card shadow border-0">
-          <div class="card-body text-center">
-            <i class="bi bi-cash-stack text-primary display-4"></i>
-            <h5 class="mt-3">Payroll Records</h5>
-            <h2>{{ payrolls().length }}</h2>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="card shadow border-0 mt-4">
-
-      <div class="card-body">
-
-        <h3 class="text-primary mb-4">
-          Recent Activities
-        </h3>
-
-        @for(emp of employees().slice().reverse().slice(0,3); track emp.id){
-
-        <div class="alert alert-primary">
-          Employee Added :
-          <strong>
-            {{ emp.firstName }} {{ emp.lastName }}
-          </strong>
-        </div>
-
-        }
-
-        @for(leave of leaves().slice().reverse().slice(0,2); track leave.id){
-
-        <div class="alert alert-warning">
-          Leave Request :
-          <strong>
-            {{ leave.employeeName }}
-          </strong>
-        </div>
-
-        }
-
-      </div>
-
-    </div>
-
-    <div class="mt-4">
-
-      <h3 class="text-primary mb-3">
-        Quick Actions
-      </h3>
-
-      <div class="row g-3">
-
-        <div class="col-md-3">
-          <button
-            class="btn btn-primary w-100 p-3"
-            (click)="goTo('/employees')">
-            Add Employee
-          </button>
-        </div>
-
-        <div class="col-md-3">
-          <button
-            class="btn btn-success w-100 p-3"
-            (click)="goTo('/attendance')">
-            Attendance
-          </button>
-        </div>
-
-        <div class="col-md-3">
-          <button
-            class="btn btn-warning w-100 p-3"
-            (click)="goTo('/leaves')">
-            Leave Requests
-          </button>
-        </div>
-
-        <div class="col-md-3">
-          <button
-            class="btn btn-dark w-100 p-3"
-            (click)="goTo('/payroll')">
-            Payroll
-          </button>
-        </div>
-
-      </div>
-
-    </div>
-
   </div>
 
 </div>

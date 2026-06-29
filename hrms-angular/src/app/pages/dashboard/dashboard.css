@@ -1,6 +1,7 @@
 .dashboard-content {
-  margin-left: 260px;
-  min-height: 100vh;
-  background: #f1f5f9;
-  padding: 20px;
+  margin-left: 0;
+    margin-top: 70px;   /* Navbar height */
+    min-height: calc(100vh - 70px);
+    padding: 50px 80px;
+    background: #f8fafc;
 }

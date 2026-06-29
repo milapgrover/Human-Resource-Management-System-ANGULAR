@@ -11,20 +11,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AttendanceController {
     private final AttendanceService attendanceService;
-    @PostMapping("/checkin")
-    public AttendanceResponse checkIn(@RequestBody AttendanceRequest request) {
-        return attendanceService.checkIn(request);
-    }
-    @PostMapping("/checkout")
-    public AttendanceResponse checkOut(@RequestBody AttendanceRequest request) {
-        return attendanceService.checkOut(request.getAttendanceId());
-    }
     @GetMapping
-    public List<AttendanceResponse> getAllAttendance() {
+    public List<AttendanceResponse> getAllAttendance()
+    {
         return attendanceService.getAllAttendance();
     }
     @GetMapping("/{id}")
-    public AttendanceResponse getAttendance(@PathVariable Long id) {
+    public AttendanceResponse getAttendanceById(@PathVariable Long id)
+    {
         return attendanceService.getAttendance(id);
+    }
+    @PostMapping("/checkIn")
+    public AttendanceResponse checkIn(@RequestBody AttendanceRequest attendanceRequest)
+    {
+        return attendanceService.checkIn(attendanceRequest);
+    }
+    @PostMapping("/checkOut")
+    public AttendanceResponse checkOut(@RequestBody AttendanceRequest attendanceRequest)
+    {
+        return attendanceService.checkOut(attendanceRequest.getAttendanceId());
     }
 }

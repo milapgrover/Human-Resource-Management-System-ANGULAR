@@ -5,7 +5,6 @@ import com.example.hrms.entity.Employee;
 import com.example.hrms.entity.Payroll;
 import com.example.hrms.repository.EmployeeRepository;
 import com.example.hrms.repository.PayrollRepository;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,12 +35,8 @@ public class PayrollService {
     {
         return PayrollResponse.builder()
                 .id(payroll.getId())
-                .employeeId(
-                        payroll.getEmployee().getId())
-                .employeeName(
-                        payroll.getEmployee().getFirstName()
-                                + " "
-                                + payroll.getEmployee().getLastName())
+                .employeeId(payroll.getEmployee().getId())
+                .employeeName(payroll.getEmployee().getFirstName() + " " + payroll.getEmployee().getLastName())
                 .basicSalary(payroll.getBasicSalary())
                 .bonus(payroll.getBonus())
                 .deduction(payroll.getDeduction())

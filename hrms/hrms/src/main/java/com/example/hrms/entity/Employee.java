@@ -11,25 +11,24 @@ import java.util.List;
 @Builder
 @Table(name= "employees")
 public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(unique = true)
-    private String employeeCode;
-    private String firstName;
-    private String lastName;
-    @Column(unique = true)
-    private String email;
-    private String phoneNumber;
-    private String department;
-    private String designation;
-    private Double salary;
-    private LocalDate joiningDate;
-    private String role;
-    private String password;
-    private boolean active;
-    @OneToMany(mappedBy = "employee")
-    private List<Attendance> attendance;
-    @OneToMany(mappedBy = "employee")
-    private List<Leave> leaves;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
+   @Column(unique = true)
+   private String employeeCode;
+   private String firstName;
+   private String lastName;
+   private String email;
+   private String phoneNumber;
+   private String department;
+   private String designation;
+   private Double salary;
+   private LocalDate joiningDate;
+   private String role;
+   private String password;
+   private boolean active;
+   @OneToMany(mappedBy = "employee")
+   private List<Attendance> attendance;
+   @OneToMany(mappedBy = "employee")
+   private List<Leave> leaves;
 }

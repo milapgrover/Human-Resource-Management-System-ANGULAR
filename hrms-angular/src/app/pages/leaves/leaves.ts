@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Sidebar } from '../../components/sidebar/sidebar';
 import { Navbar } from '../../components/navbar/navbar';
 
 import { ApiService } from '../../services/api';
@@ -18,7 +17,6 @@ import { ApiService } from '../../services/api';
   imports: [
     CommonModule,
     FormsModule,
-    Sidebar,
     Navbar
 ],
   templateUrl: './leaves.html',
@@ -58,11 +56,8 @@ export class Leaves implements OnInit {
   );
 
   ngOnInit(): void {
-
     this.fetchLeaves();
-
     this.fetchEmployees();
-
   }
 
   fetchLeaves(): void {
@@ -78,11 +73,9 @@ export class Leaves implements OnInit {
   }
 
   fetchEmployees(): void {
-
     this.api
       .getEmployees()
       .subscribe(data => {
-
         this.employees.set(data);
 
       });
@@ -105,7 +98,6 @@ export class Leaves implements OnInit {
           this.form.reason
       })
       .subscribe(() => {
-
         alert(
           'Leave Applied Successfully'
         );
@@ -130,7 +122,6 @@ export class Leaves implements OnInit {
     this.api
       .approveLeave(id)
       .subscribe(() => {
-
         this.fetchLeaves();
 
       });

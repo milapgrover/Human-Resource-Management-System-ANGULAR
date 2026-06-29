@@ -9,8 +9,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { Sidebar } from '../../components/sidebar/sidebar';
 import { ApiService } from '../../services/api';
+import { Navbar } from '../../components/navbar/navbar';
 
 @Component({
   selector: 'app-employees',
@@ -18,7 +18,7 @@ import { ApiService } from '../../services/api';
   imports: [
     CommonModule,
     FormsModule,
-    Sidebar
+    Navbar
   ],
   templateUrl: './employees.html',
   styleUrl: './employees.css'
@@ -43,15 +43,12 @@ export class Employees implements OnInit {
   };
 
   activeEmployees = computed(() =>
-
     this.employees().filter(
       employee => employee.active
     ).length
-
   );
 
   departmentCount = computed(() =>
-
     new Set(
       this.employees().map(
         employee => employee.department

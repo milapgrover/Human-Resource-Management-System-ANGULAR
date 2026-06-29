@@ -15,48 +15,47 @@ import java.util.List;
 public class LeaveService {
     private final LeaveRepository leaveRepository;
     private final EmployeeRepository employeeRepository;
-    public LeaveResponse applyLeave(LeaveRequest request)
-    {
-        Employee employee = employeeRepository.findById(request.getEmployeeId()).orElseThrow(()->new RuntimeException("Employee not found"));
-        Leave leave  = Leave.builder()
-                .employee(employee)
-                .startDate(request.getStartDate())
-                .endDate(request.getEndDate())
-                .reason(request.getReason())
-                .status("PENDING")
-                .build();
-        leaveRepository.save(leave);
-        return convertToResponse(leave);
-    }
-    public LeaveResponse approveLeave(Long id)
-    {
-        Leave leave = leaveRepository.findById(id).orElseThrow(() -> new RuntimeException("Leave not found"));
-        leave.setStatus("APPROVED");
-        leaveRepository.save(leave);
-        return convertToResponse(leave);
-    }
-    public LeaveResponse rejectLeave(Long id)
-    {
-        Leave leave = leaveRepository.findById(id).orElseThrow(() -> new RuntimeException("Leave not found"));
-        leave.setStatus("REJECT");
-        leaveRepository.save(leave);
-        return convertToResponse(leave);
-    }
     public LeaveResponse convertToResponse(Leave leave)
     {
         return LeaveResponse.builder()
                 .id(leave.getId())
-                .employeeId(
-                        leave.getEmployee().getId())
+                .employeeId(leave.getEmployee().getId())
                 .employeeName(
-                        leave.getEmployee().getFirstName()
-                                + " "
-                                + leave.getEmployee().getLastName())
+                        leave.getEmployee().getFirstName() + " " +
+                                leave.getEmployee().getLastName()
+                )
                 .startDate(leave.getStartDate())
-                .endDate(leave.getEndDate())
-                .reason(leave.getReason())
-                .status(leave.getStatus())
+                .endDate(leave.getEndDate()).
+                reason(leave.getReason()).
+                status(leave.getStatus())
                 .build();
+    }
+    public LeaveResponse applyLeave(LeaveRequest leaveRequest)
+    {
+        Employee employee = employeeRepository.findById(leaveRequest.getEmployeeId()).orElseThrow(()->new RuntimeException("Employee Not found"));
+        Leave leave = Leave.builder()
+                .employee(employee)
+                .startDate(leaveRequest.getStartDate())
+                .endDate(leaveRequest.getEndDate())
+                .reason(leaveRequest.getReason())
+                .status("PENDING")
+                .build();
+        leave = leaveRepository.save(leave);
+        return convertToResponse(leave);
+    }
+    public LeaveResponse approveLeave(Long id)
+    {
+        Leave leave =leaveRepository.findById(id).orElseThrow(() -> new RuntimeException("Leave not found"));
+        leave.setStatus("APPROVED");
+        leave = leaveRepository.save(leave);
+        return convertToResponse(leave);
+    }
+    public LeaveResponse rejectLeave(Long id)
+    {
+        Leave leave =leaveRepository.findById(id).orElseThrow(() -> new RuntimeException("Leave not found"));
+        leave.setStatus("REJECT");
+        leave = leaveRepository.save(leave);
+        return convertToResponse(leave);
     }
     public List<LeaveResponse> getAllLeaves()
     {

@@ -14,13 +14,12 @@ public class AuthService {
     private final EmployeeRepository employeeRepository;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
-    public LoginResponse login(LoginRequest request)
+    public LoginResponse login(LoginRequest loginRequest)
     {
-        Employee employee = employeeRepository.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException("Employee does not Exists"));
-        if (!passwordEncoder.matches(
-                request.getPassword(),
-                employee.getPassword())) {
-            throw new RuntimeException("Password is wrong");
+        Employee employee = employeeRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()->new RuntimeException("No such Email Exists"));
+        if(!passwordEncoder.matches(loginRequest.getPassword() ,  employee.getPassword()))
+        {
+            throw new RuntimeException("PassWord is Invalid");
         }
         String token = jwtUtil.generateToken(employee.getEmail());
         return new LoginResponse(token);

@@ -10,8 +10,6 @@ export class ApiService {
 
   private baseUrl = 'http://localhost:8080';
 
-  // Auth
-
   login(data: any) {
     return this.http.post(
       `${this.baseUrl}/auth/login`,
@@ -27,7 +25,6 @@ export class ApiService {
   }
 
 
-
   getPayroll() {
     return this.http.get<any[]>(
       `${this.baseUrl}/payroll`
@@ -40,6 +37,7 @@ export class ApiService {
       data
     );
   }
+  
   getLeaves() {
   return this.http.get<any[]>(
     `${this.baseUrl}/leaves`
@@ -94,14 +92,14 @@ getAttendance() {
 
 checkIn(data: any) {
   return this.http.post(
-    `${this.baseUrl}/attendance/checkin`,
+    `${this.baseUrl}/attendance/checkIn`,
     data
   );
 }
 
 checkOut(data: any) {
   return this.http.post(
-    `${this.baseUrl}/attendance/checkout`,
+    `${this.baseUrl}/attendance/checkOut`,
     data
   );
 }

@@ -1,74 +1,48 @@
-<div
-  class="min-vh-100 d-flex justify-content-center align-items-center login-bg">
+<div class="login-container">
 
-  <div class="card border-0 shadow-lg p-5 login-card">
-
-    <!-- Logo -->
+  <div class="card border-0 login-card">
 
     <div class="text-center mb-4">
-
-      <div
-        class="bg-primary rounded-circle d-inline-flex justify-content-center align-items-center logo-box">
-
-        <i class="bi bi-person-workspace text-white logo-icon"></i>
-
+      <div class="logo-box">
+        <i class="bi bi-person-workspace logo-icon"></i>
       </div>
-
     </div>
 
-    <!-- Heading -->
-
-    <h1 class="text-center text-primary fw-bold mb-2">
+    <h2 class="text-center fw-bold mb-2 text-dark">
       HRMS Login
-    </h1>
+    </h2>
 
     <p class="text-center text-muted mb-4">
       Welcome Back
     </p>
 
-    <!-- Email -->
-
     <div class="mb-3">
-
-      <label class="form-label fw-semibold">
-        Email
-      </label>
+      <label class="form-label fw-semibold">Email</label>
 
       <input
         type="email"
-        class="form-control form-control-lg"
+        class="form-control"
         placeholder="Enter Email"
         [(ngModel)]="email"
         (keydown)="handleKeyPress($event)">
-
     </div>
 
-    <!-- Password -->
-
     <div class="mb-4">
-
-      <label class="form-label fw-semibold">
-        Password
-      </label>
+      <label class="form-label fw-semibold">Password</label>
 
       <input
         type="password"
-        class="form-control form-control-lg"
+        class="form-control"
         placeholder="Enter Password"
         [(ngModel)]="password"
         (keydown)="handleKeyPress($event)">
-
     </div>
 
-    <!-- Button -->
-
     <button
-      class="btn btn-primary btn-lg w-100"
+      class="btn btn-dark w-100 login-btn"
       [disabled]="loading"
       (click)="login()">
-
       {{ loading ? 'Logging In...' : 'Login' }}
-
     </button>
 
   </div>

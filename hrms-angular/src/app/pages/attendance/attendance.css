@@ -1,6 +1,62 @@
 .attendance-content {
-  margin-left: 260px;
-  min-height: 100vh;
-  background: #eff6ff;
-  padding: 20px;
+    margin-left: 0;
+    margin-top: 70px;  
+    min-height: calc(100vh - 70px);
+    padding: 50px 80px;
+    background: #f8fafc;
+}
+
+.card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card-body {
+  padding: 28px;
+}
+
+.form-control {
+  height: 48px;
+  border-radius: 10px;
+}
+
+.btn-primary {
+  height: 48px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background: #f1f5f9;
+  color: #374151;
+  border: none;
+  font-weight: 600;
+}
+
+.table tbody td {
+  vertical-align: middle;
+  border-color: #e5e7eb;
+}
+
+.btn-danger {
+  border-radius: 8px;
+}
+
+.text-success {
+  font-weight: 600;
+}
+
+@media (max-width: 992px) {
+
+  .attendance-content {
+    margin-left: 0;
+    margin-top: 70px;
+    padding: 20px;
+  }
+
 }

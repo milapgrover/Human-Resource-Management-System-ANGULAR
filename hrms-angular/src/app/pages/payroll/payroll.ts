@@ -8,8 +8,6 @@ import {
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import { Sidebar } from '../../components/sidebar/sidebar';
 import { Navbar } from '../../components/navbar/navbar';
 import { ApiService } from '../../services/api';
 
@@ -19,7 +17,7 @@ import { ApiService } from '../../services/api';
   imports: [
     CommonModule,
     FormsModule,
-    Sidebar
+    Navbar
   ],
   templateUrl: './payroll.html',
   styleUrl: './payroll.css'
@@ -27,17 +25,15 @@ import { ApiService } from '../../services/api';
 export class Payroll implements OnInit {
 
   private api = inject(ApiService);
-
   payrolls = signal<any[]>([]);
-
   employees = signal<any[]>([]);
-
   form = {
     employeeId: '',
     basicSalary: '',
     bonus: '',
     deduction: ''
   };
+
 
   totalBonus = computed(() =>
 
@@ -60,9 +56,7 @@ export class Payroll implements OnInit {
   );
 
   ngOnInit(): void {
-
     this.fetchPayrolls();
-
     this.fetchEmployees();
 
   }

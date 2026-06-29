@@ -18,29 +18,18 @@ import java.util.List;
 public class AttendanceService {
     private final AttendanceRepository attendanceRepository;
     private final EmployeeRepository employeeRepository;
-    public AttendanceResponse checkIn(AttendanceRequest request)
-    {
-        Employee employee = employeeRepository.findById(request.getEmployeeId()).orElseThrow(()->new RuntimeException("Employee does not Exists"));
-        Attendance attendance = Attendance.builder()
-                .employee(employee)
-                .attendanceDate(LocalDate.now())
-                .checkInTime(LocalDateTime.now())
-                .build();
-        attendanceRepository.save(attendance);
-        return convertToResponse(attendance);
-    }
     private AttendanceResponse convertToResponse(Attendance attendance)
     {
         return AttendanceResponse.builder()
                 .id(attendance.getId())
-                .employeeId(attendance.getEmployee().getId())
-                .employeeName(attendance.getEmployee().getFirstName() +" "+ attendance.getEmployee().getLastName())
+                .employeeName(attendance.getEmployee().getFirstName() + " " + attendance.getEmployee().getLastName())
                 .attendanceDate(attendance.getAttendanceDate())
                 .checkInTime(attendance.getCheckInTime())
                 .checkOutTime(attendance.getCheckOutTime())
                 .workingHours(attendance.getWorkingHours())
-                .build();
+            .build();
     }
+
     public List<AttendanceResponse> getAllAttendance()
     {
         return attendanceRepository.findAll().stream().map(this::convertToResponse).toList();
@@ -50,15 +39,21 @@ public class AttendanceService {
         Attendance attendance = attendanceRepository.findById(id).orElseThrow(()->new RuntimeException("Attendance not found"));
         return convertToResponse(attendance);
     }
+    public AttendanceResponse checkIn(AttendanceRequest attendanceRequest)
+    {
+        Employee employee = employeeRepository.findById(attendanceRequest.getEmployeeId()).orElseThrow(()->new RuntimeException("Employee does not Exists"));
+        Attendance attendance = Attendance.builder()
+                .employee(employee).attendanceDate(LocalDate.now()).checkInTime(LocalDateTime.now()).build();
+        attendanceRepository.save(attendance);
+        return convertToResponse(attendance);
+    }
     public AttendanceResponse checkOut(Long attendanceId)
     {
-        Attendance attendance = attendanceRepository.findById(attendanceId)
-                .orElseThrow(() ->
-                        new RuntimeException("Attendance not found"));
+        Attendance attendance = attendanceRepository.findById(attendanceId).orElseThrow(()->new RuntimeException("Employee Does not check In"));
         attendance.setCheckOutTime(LocalDateTime.now());
-        double hours = Duration.between(attendance.getCheckInTime() ,attendance.getCheckOutTime()).toHours();
+        double hours = Duration.between(attendance.getCheckInTime() , attendance.getCheckOutTime()).toHours();
         attendance.setWorkingHours(hours);
-        attendance = attendanceRepository.save(attendance);
+        attendanceRepository.save(attendance);
         return convertToResponse(attendance);
     }
 }

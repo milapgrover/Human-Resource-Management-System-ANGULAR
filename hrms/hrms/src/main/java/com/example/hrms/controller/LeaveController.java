@@ -3,6 +3,7 @@ import com.example.hrms.dto.LeaveRequest;
 import com.example.hrms.dto.LeaveResponse;
 import com.example.hrms.service.LeaveService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,28 +14,28 @@ import java.util.List;
 public class LeaveController {
     private final LeaveService leaveService;
     @GetMapping
-    public List<LeaveResponse> getAllLeaves()
+    public ResponseEntity<List<LeaveResponse>> getAllLeaves()
     {
-        return leaveService.getAllLeaves();
+        return ResponseEntity.ok(leaveService.getAllLeaves());
     }
     @GetMapping("/{id}")
-    public LeaveResponse getLeave(@PathVariable Long id)
+    public ResponseEntity<LeaveResponse> getLeave(@PathVariable Long id)
     {
-        return leaveService.getLeave(id);
+        return ResponseEntity.ok(leaveService.getLeave(id));
     }
     @PutMapping("/approve/{id}")
-    public LeaveResponse approveLeave(@PathVariable Long id)
+    public ResponseEntity<LeaveResponse> approveLeave(@PathVariable Long id)
     {
-        return leaveService.approveLeave(id);
+        return ResponseEntity.ok(leaveService.approveLeave(id));
     }
     @PutMapping("/reject/{id}")
-    public LeaveResponse rejectLeave(@PathVariable Long id)
+    public ResponseEntity<LeaveResponse> rejectLeave(@PathVariable Long id)
     {
-        return leaveService.rejectLeave(id);
+        return ResponseEntity.ok(leaveService.rejectLeave(id));
     }
     @PostMapping
-    public LeaveResponse applyLeave(@RequestBody LeaveRequest request)
+    public ResponseEntity<LeaveResponse> applyLeave(@RequestBody LeaveRequest request)
     {
-        return leaveService.applyLeave(request);
+        return ResponseEntity.ok(leaveService.applyLeave(request));
     }
 }

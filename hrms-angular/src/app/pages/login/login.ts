@@ -25,32 +25,22 @@ export class Login {
       alert('Please enter Email and Password');
       return;
     }
-
     this.loading = true;
-
     this.api.login({
       email: this.email,
       password: this.password
     }).subscribe({
       next: (response: any) => {
-
         localStorage.setItem(
           'token',
           response.token
         );
-
-        localStorage.setItem(
-          'user',
-          JSON.stringify(response.user || response)
+        localStorage.setItem('user',JSON.stringify(response.user || response)
         );
-
         alert('Login Successful');
-
         this.router.navigate(['/dashboard']);
-
         this.loading = false;
       },
-
       error: (error) => {
         console.error(error);
         alert('Invalid Email or Password');

@@ -2,11 +2,9 @@ package com.example.hrms.controller;
 import com.example.hrms.dto.LoginRequest;
 import com.example.hrms.dto.LoginResponse;
 import com.example.hrms.service.AuthService;
+import com.mysql.cj.log.Log;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
