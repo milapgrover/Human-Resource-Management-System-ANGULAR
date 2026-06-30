@@ -1,73 +1,61 @@
 <app-navbar></app-navbar>
+
 <div class="page-content">
-
-
   <div class="container-fluid py-4">
 
     <h1 class="text-primary text-dark fw-bold mb-4">
       Leave Management
     </h1>
 
-
+    <!-- Apply Leave -->
 
     <div class="card shadow border-0 mb-4">
       <div class="card-body">
 
-        <h4 class="text-primarytext-dark  mb-4">
+        <h4 class="text-primary text-dark mb-4">
           Apply Leave
         </h4>
 
         <div class="row g-3">
 
+          @if(isAdmin()) {
           <div class="col-md-6">
-
-            <select
-              class="form-select"
-              [(ngModel)]="form.employeeId">
-
-              <option value="">
-                Select Employee
-              </option>
+            <select class="form-select" [(ngModel)]="form.employeeId">
+              <option value="">Select Employee</option>
 
               @for(emp of employees(); track emp.id){
-
-                <option [value]="emp.id">
-                  {{ emp.firstName }}
-                  {{ emp.lastName }}
-                </option>
-
+              <option [value]="emp.id">
+                {{ emp.firstName }} {{ emp.lastName }}
+              </option>
               }
 
             </select>
-
           </div>
+          }
 
           <div class="col-md-6">
-
             <input
               type="date"
               class="form-control"
-              [(ngModel)]="form.startDate">
-
+              [(ngModel)]="form.startDate"
+            />
           </div>
 
           <div class="col-md-6">
-
             <input
               type="date"
               class="form-control"
-              [(ngModel)]="form.endDate">
-
+              [(ngModel)]="form.endDate"
+            />
           </div>
 
           <div class="col-md-6">
-
             <input
               type="text"
               class="form-control"
               placeholder="Reason"
-              [(ngModel)]="form.reason">
-
+              [(ngModel)]="form.reason"
+            />
           </div>
 
         </div>
@@ -75,31 +63,26 @@
         <button
           class="btn btn-primary mt-4"
           (click)="applyLeave()">
-
           Apply Leave
-
         </button>
 
       </div>
     </div>
 
-    <!-- Stats -->
+    <!-- Statistics -->
 
     <div class="row g-4 mb-4">
 
       <div class="col-md-4">
-
         <div class="card shadow border-0">
           <div class="card-body">
             <h6>Total Requests</h6>
             <h2>{{ leaves().length }}</h2>
           </div>
         </div>
-
       </div>
 
       <div class="col-md-4">
-
         <div class="card shadow border-0">
           <div class="card-body">
             <h6>Approved</h6>
@@ -108,11 +91,9 @@
             </h2>
           </div>
         </div>
-
       </div>
 
       <div class="col-md-4">
-
         <div class="card shadow border-0">
           <div class="card-body">
             <h6>Pending</h6>
@@ -121,17 +102,16 @@
             </h2>
           </div>
         </div>
-
       </div>
 
     </div>
 
-    <!-- Table -->
+    <!-- Leave Table -->
 
     <div class="card shadow border-0">
       <div class="card-body">
 
-        <h4 class="text-primary text-dark  mb-4">
+        <h4 class="text-primary text-dark mb-4">
           Leave Requests
         </h4>
 
@@ -142,13 +122,18 @@
             <thead class="table-primary">
 
               <tr>
+
                 <th>ID</th>
                 <th>Employee</th>
                 <th>Start</th>
                 <th>End</th>
                 <th>Reason</th>
                 <th>Status</th>
+
+                @if(isAdmin()) {
                 <th>Action</th>
+                }
+
               </tr>
 
             </thead>
@@ -157,53 +142,50 @@
 
               @for(leave of leaves(); track leave.id){
 
-                <tr>
+              <tr>
 
-                  <td>{{ leave.id }}</td>
+                <td>{{ leave.id }}</td>
 
-                  <td>{{ leave.employeeName }}</td>
+                <td>{{ leave.employeeName }}</td>
 
-                  <td>{{ leave.startDate }}</td>
+                <td>{{ leave.startDate }}</td>
 
-                  <td>{{ leave.endDate }}</td>
+                <td>{{ leave.endDate }}</td>
 
-                  <td>{{ leave.reason }}</td>
+                <td>{{ leave.reason }}</td>
 
-                  <td>
+                <td>
+                  <span
+                    class="badge"
+                    [class.bg-success]="leave.status === 'APPROVED'"
+                    [class.bg-danger]="leave.status === 'REJECTED'"
+                    [class.bg-warning]="leave.status === 'PENDING'"
+                  >
+                    {{ leave.status }}
+                  </span>
+                </td>
 
-                    <span
-                      class="badge"
-                      [class.bg-success]="leave.status === 'APPROVED'"
-                      [class.bg-danger]="leave.status === 'REJECTED'"
-                      [class.bg-warning]="leave.status === 'PENDING'">
+                @if(isAdmin()) {
 
-                      {{ leave.status }}
+                <td>
 
-                    </span>
+                  <button
+                    class="btn btn-success btn-sm me-2"
+                    (click)="approveLeave(leave.id)">
+                    Approve
+                  </button>
 
-                  </td>
+                  <button
+                    class="btn btn-danger btn-sm"
+                    (click)="rejectLeave(leave.id)">
+                    Reject
+                  </button>
 
-                  <td>
+                </td>
 
-                    <button
-                      class="btn btn-success btn-sm me-2"
-                      (click)="approveLeave(leave.id)">
+                }
 
-                      Approve
-
-                    </button>
-
-                    <button
-                      class="btn btn-danger btn-sm"
-                      (click)="rejectLeave(leave.id)">
-
-                      Reject
-
-                    </button>
-
-                  </td>
-
-                </tr>
+              </tr>
 
               }
 
@@ -217,5 +199,4 @@
     </div>
 
   </div>
-
 </div>

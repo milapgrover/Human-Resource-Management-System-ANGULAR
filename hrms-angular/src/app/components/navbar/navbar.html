@@ -1,21 +1,23 @@
 <nav class="navbar">
-
   <div class="navbar-left">
     <h3 class="logo">HRMS</h3>
 
     <a [routerLink]="['/dashboard']" routerLinkActive="active-nav">Dashboard</a>
     <a [routerLink]="['/employees']" routerLinkActive="active-nav">Employees</a>
-    <a [routerLink]="['/attendance']" routerLinkActive="active-nav">Attendance</a>
+    <a [routerLink]="['/attendance']" routerLinkActive="active-nav"
+      >Attendance</a
+    >
     <a [routerLink]="['/leaves']" routerLinkActive="active-nav">Leaves</a>
-    <a [routerLink]="['/payroll']" routerLinkActive="active-nav">Payroll</a>
+    @if(isAdmin()) {
+    <a [routerLink]="['/payroll']" routerLinkActive="active-nav"> Payroll </a>
+    }
   </div>
 
   <div class="navbar-right">
+    <div class="role-circle">{{ isAdmin() ? 'A' : 'E' }}</div>
     <button class="logout-btn" (click)="logout()">
       <i class="bi bi-box-arrow-right me-2"></i>
       Logout
     </button>
-    
   </div>
-
 </nav>

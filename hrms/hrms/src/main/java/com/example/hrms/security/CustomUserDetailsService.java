@@ -15,13 +15,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final EmployeeRepository employeeRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
-
-        Employee employee = employeeRepository.findByEmail(email).orElseThrow(() ->
-                new UsernameNotFoundException("User not found"));
-
-        return User.builder().username(employee.getEmail()).password(employee.getPassword())
-                .authorities(List.of(new SimpleGrantedAuthority("ROLE_" + employee.getRole()))).build();
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Employee employee = employeeRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("UserName Not Found"));
+        return User.builder().username(employee.getEmail()).password(employee.getPassword()).authorities(List.of(new SimpleGrantedAuthority("ROLE_" + employee.getDepartment()))).build();
     }
 }

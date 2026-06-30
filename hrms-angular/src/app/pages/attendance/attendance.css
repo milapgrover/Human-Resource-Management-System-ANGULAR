@@ -1,9 +1,9 @@
 .attendance-content {
-    margin-left: 0;
-    margin-top: 70px;  
-    min-height: calc(100vh - 70px);
-    padding: 50px 80px;
-    background: #f8fafc;
+  margin-left: 0;
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
+  padding: 50px 80px;
+  background: #f8fafc;
 }
 
 .card {
@@ -51,12 +51,11 @@
   font-weight: 600;
 }
 
-@media (max-width: 992px) {
 
+@media (max-width: 992px) {
   .attendance-content {
     margin-left: 0;
     margin-top: 70px;
     padding: 20px;
   }
-
 }

@@ -3,21 +3,24 @@
   <div class="container-fluid py-4">
     <div class="d-flex align-items-center gap-3 mb-4">
       <i class="bi bi-calendar-check-fill text-primary display-6"></i>
-      <h1 class="fw-bold text-dark text-primary mb-0">
-        Attendance Management
-      </h1>
+      <h1 class="fw-bold text-dark text-primary mb-0">Attendance Management</h1>
     </div>
-
 
     <div class="card shadow border-0 mb-4">
       <div class="card-body">
-        <h4 class="text-primary  text-dark mb-3">
-          Employee Check In
-        </h4>
+        <h4 class="text-primary text-dark mb-3">Employee Check In</h4>
         <div class="row g-3">
+          @if(isAdmin()) {
           <div class="col-md-8">
-            <input type="number" class="form-control" placeholder="Employee ID"[(ngModel)]="employeeId">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Employee ID"
+              [ngModel]="employeeId()"
+              (ngModelChange)="employeeId.set($event)"
+            />
           </div>
+          }
           <div class="col-md-4">
             <button class="btn btn-primary w-100" (click)="checkIn()">
               Check In
@@ -27,12 +30,9 @@
       </div>
     </div>
 
-
     <div class="card shadow border-0">
       <div class="card-body">
-        <h4 class="text-primary text-dark mb-4">
-          Attendance Records
-        </h4>
+        <h4 class="text-primary text-dark mb-4">Attendance Records</h4>
         <div class="table-responsive">
           <table class="table table-hover">
             <thead class="table-primary">
@@ -47,34 +47,30 @@
               </tr>
             </thead>
             <tbody>
-
               @for(record of attendance(); track record.id){
-                <tr>
-                  <td>{{ record.id }}</td>
-                  <td>{{ record.employeeName }}</td>
-                  <td>{{ record.attendanceDate }}</td>
-                  <td>{{ record.checkInTime }}</td>
-                  <td>
-                    {{ record.checkOutTime || '-' }}
-                  </td>
-                  <td>
-                    {{ record.workingHours || 0 }}
-                  </td>
-                  <td>
+              <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.employeeName }}</td>
+                <td>{{ record.attendanceDate }}</td>
+                <td>{{ record.checkInTime }}</td>
+                <td>{{ record.checkOutTime || '-' }}</td>
+                <td>{{ record.workingHours || 0 }}</td>
+                <td>
+                  @if(record.checkOutTime){
+                  <span class="text-success fw-bold"> Completed </span>
+                  } @else 
 
-                    @if(record.checkOutTime){
-                      <span class="text-success fw-bold">
-                        Completed
-                      </span>
-                    } @else {
-                      <button
-                        class="btn btn-danger btn-sm"
-                        (click)="checkOut(record.id)">
-                        Check Out
-                      </button>
-                    }
-                  </td>
-                </tr>
+                  {
+                  <button
+                    class="btn btn-danger btn-sm"
+                    (click)="checkOut(record.id)"
+                  >
+                    Check Out
+                  </button>
+                
+                }
+                </td>
+              </tr>
               }
             </tbody>
           </table>
@@ -82,5 +78,4 @@
       </div>
     </div>
   </div>
-
 </div>

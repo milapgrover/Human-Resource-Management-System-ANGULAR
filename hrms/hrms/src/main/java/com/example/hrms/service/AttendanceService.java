@@ -7,7 +7,6 @@ import com.example.hrms.repository.AttendanceRepository;
 import com.example.hrms.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,7 +28,6 @@ public class AttendanceService {
                 .workingHours(attendance.getWorkingHours())
             .build();
     }
-
     public List<AttendanceResponse> getAllAttendance()
     {
         return attendanceRepository.findAll().stream().map(this::convertToResponse).toList();

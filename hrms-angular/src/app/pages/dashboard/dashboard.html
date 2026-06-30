@@ -4,13 +4,16 @@
   <div class="container-fluid py-5">
     <div class="row align-items-center mb-5">
       <div class="col-lg-7">
-        <p class="text-uppercase text-secondary small mb-3" style="letter-spacing:4px;">
+        <p
+          class="text-uppercase text-secondary small mb-3"
+          style="letter-spacing: 4px"
+        >
           Human Resource Management
         </p>
 
         <h1 class="display-2 fw-light">
-          Manage your <br>
-          workforce <br>
+          Manage your <br />
+          workforce <br />
           effortlessly.
         </h1>
 
@@ -20,23 +23,26 @@
           Everything you need in one clean dashboard.
         </p>
 
+        @if(isAdmin()) {
         <button
           class="btn btn-dark px-5 py-3 me-3"
           (click)="goTo('/employees')">
           Manage Employees
         </button>
+        }
 
         <button
           class="btn btn-outline-dark px-5 py-3"
-          (click)="goTo('/attendance')">
+          (click)="goTo('/attendance')"
+        >
           Attendance
         </button>
-
       </div>
       <div class="col-lg-5 d-flex justify-content-center">
-        <div style="width:350px;height:2px;background:#333;margin-top:150px;"></div>
+        <div
+          style="width: 350px; height: 2px; background: #333; margin-top: 150px"
+        ></div>
       </div>
     </div>
   </div>
-
 </div>

@@ -11,13 +11,13 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource()
     {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
-        corsConfiguration.setAllowedMethods(List.of("POST" , "PUT" , "GET" , "DELETE"));
-        corsConfiguration.setAllowedHeaders(List.of("*"));
-        corsConfiguration.setAllowCredentials(true);
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowedMethods(List.of("POST" , "PUT" , "DELETE", "GET"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**" , corsConfiguration);
-        return urlBasedCorsConfigurationSource;
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**" , configuration);
+        return  urlBasedCorsConfigurationSource;
     }
 }

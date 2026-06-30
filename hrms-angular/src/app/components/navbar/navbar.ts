@@ -1,24 +1,20 @@
 import { Component, inject } from '@angular/core';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive
-} from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive
-  ],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css'
+  styleUrl: './navbar.css',
 })
 export class Navbar {
-  private router = inject(Router)
-  logout() : void
-  {
-    this.router.navigate(['/']);  
+  private router = inject(Router);
+  isAdmin(): boolean {
+    return localStorage.getItem('role') === 'ADMIN';
+  }
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 }

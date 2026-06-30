@@ -22,6 +22,11 @@ public class AuthService {
             throw new RuntimeException("PassWord is Invalid");
         }
         String token = jwtUtil.generateToken(employee.getEmail());
-        return new LoginResponse(token);
+        return LoginResponse.builder()
+                .token(token)
+                .role(employee.getRole())
+                .employeeId(employee.getId())
+                .firstName(employee.getFirstName())
+                .build();
     }
 }

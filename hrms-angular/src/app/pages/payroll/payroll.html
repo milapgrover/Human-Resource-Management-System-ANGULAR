@@ -1,47 +1,26 @@
 <app-navbar></app-navbar>
 
 <div class="page-content">
-
-
-
   <div class="container-fluid py-4">
-
-    <h1 class="text-primary text-dark fw-bold mb-4">
-      Payroll Management
-    </h1>
-
-
-
+    <h1 class="text-primary text-dark fw-bold mb-4">Payroll Management</h1>
+    @if(isAdmin()) {
     <div class="card shadow border-0 mb-4">
       <div class="card-body">
-
-        <h4 class="text-primary text-dark mb-4">
-          Generate Payroll
-        </h4>
+        <h4 class="text-primary text-dark mb-4">Generate Payroll</h4>
 
         <div class="row g-3">
-
           <div class="col-md-3">
-
-            <select
-              class="form-select"
-              [(ngModel)]="form.employeeId">
-
-              <option value="">
-                Select Employee
-              </option>
+            <select class="form-select" [(ngModel)]="form.employeeId">
+              <option value="">Select Employee</option>
 
               @for(emp of employees(); track emp.id){
 
-                <option [value]="emp.id">
-                  {{ emp.firstName }}
-                  {{ emp.lastName }}
-                </option>
+              <option [value]="emp.id">
+                {{ emp.firstName }} {{ emp.lastName }}
+              </option>
 
               }
-
             </select>
-
           </div>
 
           <div class="col-md-3">
@@ -49,7 +28,8 @@
               type="number"
               class="form-control"
               placeholder="Basic Salary"
-              [(ngModel)]="form.basicSalary">
+              [(ngModel)]="form.basicSalary"
+            />
           </div>
 
           <div class="col-md-3">
@@ -57,7 +37,8 @@
               type="number"
               class="form-control"
               placeholder="Bonus"
-              [(ngModel)]="form.bonus">
+              [(ngModel)]="form.bonus"
+            />
           </div>
 
           <div class="col-md-3">
@@ -65,24 +46,19 @@
               type="number"
               class="form-control"
               placeholder="Deduction"
-              [(ngModel)]="form.deduction">
+              [(ngModel)]="form.deduction"
+            />
           </div>
-
         </div>
 
-        <button
-          class="btn btn-primary mt-4"
-          (click)="generatePayroll()">
+        <button class="btn btn-primary mt-4" (click)="generatePayroll()">
           Generate Payroll
         </button>
-
       </div>
     </div>
 
-    <!-- Stats -->
-
+    }
     <div class="row g-4 mb-4">
-
       <div class="col-md-4">
         <div class="card shadow border-0">
           <div class="card-body">
@@ -109,75 +85,47 @@
           </div>
         </div>
       </div>
-
     </div>
-
 
     <div class="card shadow border-0">
       <div class="card-body">
-
-        <h4 class="text-primary text-dark mb-4">
-          Payroll Records
-        </h4>
+        <h4 class="text-primary text-dark mb-4">Payroll Records</h4>
 
         <div class="table-responsive">
-
           <table class="table table-hover">
-
             <thead class="table-primary">
-
-            <tr>
-              <th>ID</th>
-              <th>Employee</th>
-              <th>Basic</th>
-              <th>Bonus</th>
-              <th>Deduction</th>
-              <th>Net Salary</th>
-            </tr>
-
+              <tr>
+                <th>ID</th>
+                <th>Employee</th>
+                <th>Basic</th>
+                <th>Bonus</th>
+                <th>Deduction</th>
+                <th>Net Salary</th>
+              </tr>
             </thead>
 
             <tbody>
-
-            @for(payroll of payrolls(); track payroll.id){
+              @for(payroll of payrolls(); track payroll.id){
 
               <tr>
-
                 <td>{{ payroll.id }}</td>
 
-                <td>
-                  {{ payroll.employeeName }}
-                </td>
+                <td>{{ payroll.employeeName }}</td>
 
-                <td>
-                  ₹{{ payroll.basicSalary }}
-                </td>
+                <td>₹{{ payroll.basicSalary }}</td>
 
-                <td class="text-success">
-                  ₹{{ payroll.bonus }}
-                </td>
+                <td class="text-success">₹{{ payroll.bonus }}</td>
 
-                <td class="text-danger">
-                  ₹{{ payroll.deduction }}
-                </td>
+                <td class="text-danger">₹{{ payroll.deduction }}</td>
 
-                <td class="fw-bold text-primary">
-                  ₹{{ payroll.netSalary }}
-                </td>
-
+                <td class="fw-bold text-primary">₹{{ payroll.netSalary }}</td>
               </tr>
 
-            }
-
+              }
             </tbody>
-
           </table>
-
         </div>
-
       </div>
     </div>
-
   </div>
-
 </div>

@@ -4,6 +4,7 @@ import com.example.hrms.dto.EmployeeResponse;
 import com.example.hrms.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.updateEmployee(id,employeeRequest));
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.deleteEmployee(id));
     }

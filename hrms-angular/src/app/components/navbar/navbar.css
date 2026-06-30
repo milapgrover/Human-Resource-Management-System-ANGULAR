@@ -1,16 +1,16 @@
-.navbar{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    background: white;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 35px;
-    border-bottom: 1px solid #e5e7eb;
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: white;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 35px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .navbar-left {
@@ -31,7 +31,7 @@
   color: #6b7280;
   font-size: 15px;
   font-weight: 500;
-  transition: .3s;
+  transition: 0.3s;
 }
 .navbar-left a:hover {
   color: #111827;
@@ -43,7 +43,27 @@
   padding-bottom: 4px;
 }
 
-
 .logout-btn {
-    margin-left: auto;
+  margin-left: auto;
+}
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.role-circle {
+  width: 38px;
+  height: 38px;
+  border: 2px solid black;
+  border-radius: 50%;
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  cursor: default;
 }

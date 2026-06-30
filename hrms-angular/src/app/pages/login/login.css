@@ -1,9 +1,9 @@
 .login-container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #f5f7fb;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f7fb;
 }
 
 .login-card {
@@ -12,7 +12,7 @@
   padding: 40px;
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0 15px 40px rgba(0,0,0,.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .logo-box {
